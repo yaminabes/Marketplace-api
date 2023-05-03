@@ -1,0 +1,80 @@
+version: '3.6'
+
+networks:
+  marketplace-net-dev:
+    name: marketplace-net-dev
+
+volumes:
+  db-data-dev:
+    name: db-data-dev
+  marketplace-s3-data-dev:
+    name: marketplace-s3-data-dev
+
+services:
+  marketplace-api-dev:
+    container_name: '${MARKETPLACE_API_NAME}-dev'
+    image: ${MARKETPLACE_API_IMG}:${MARKETPLACE_API_VERSION_DEV}
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080${MARKETPLACE_API_ROOT_PATH_DEV}"]
+      interval: 1m
+      timeout: 30s
+      retries: 3
+      start_period: 10s
+    environment:
+    - 'ENV=development'
+    - 'TZ=${MARKETPLACE_API_TZ}'
+    - 'LOG_LEVEL=${MARKETPLACE_API_LOG_LEVEL_DEV}'
+    - 'CORS_ORIGINS=${MARKETPLACE_API_CORS_ORIGINS_DEV}'
+    - 'ROOT_PATH=${MARKETPLACE_API_ROOT_PATH_DEV}'
+    - 'DATABASE_URL=postgresql://${MARKETPLACE_DATABASE_USER_DEV}:${MARKETPLACE_DATABASE_PASSWORD_DEV}@${MARKETPLACE_DATABASE_NAME}-dev:${MARKETPLACE_DATABASE_PORT}'
+    - 'DATABASE_DB=${MARKETPLACE_DATABASE_DB_DEV}'
+    - 'S3_REGION=${MARKETPLACE_S3_REGION_DEV}'
+    - 'S3_ACCESS_KEY=${MARKETPLACE_S3_ACCESS_KEY_DEV}'
+    - 'S3_SECRET_ACCESS_KEY=${MARKETPLACE_S3_SECRET_ACCESS_KEY_DEV}'
+    - 'S3_URL=http://${MARKETPLACE_S3_NAME}-dev:9000'
+    - 'S3_BUCKET_NAME=${MARKETPLACE_S3_BUCKET_NAME_DEV}'
+    - 'VERSION=${MARKETPLACE_API_VERSION_DEV}'
+    volumes:
+    - ./src:/app:rw
+    networks:
+    - marketplace-net-dev
+    ports:
+    - ${MARKETPLACE_API_PORT}:8080
+    depends_on:
+    - marketplace-database-dev
+    - marketplace-s3-dev
+    restart: unless-stopped
+
+  marketplace-database-dev:
+    container_name: '${MARKETPLACE_DATABASE_NAME}-dev'
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${MARKETPLACE_DATABASE_PASSWORD_DEV}
+      POSTGRES_DB: marketplace
+    volumes:
+      - db-data-dev:/var/lib/postgresql/data
+    networks:
+      - marketplace-net-dev
+    ports:
+      - ${MARKETPLACE_DATABASE_PORT}:5432
+
+  marketplace-s3-dev:
+    container_name: '${MARKETPLACE_S3_NAME}-dev'
+    image: ${MARKETPLACE_S3_IMG}:${MARKETPLACE_S3_VERSION_DEV}
+    command: server --address "${MARKETPLACE_S3_NAME}-dev:9000" --console-address "${MARKETPLACE_S3_NAME}-dev:9001" /data
+    environment:
+    - 'MINIO_ROOT_USER=${MARKETPLACE_S3_ACCESS_KEY_DEV}'
+    - 'MINIO_ROOT_PASSWORD=${MARKETPLACE_S3_SECRET_ACCESS_KEY_DEV}'
+    volumes:
+    - marketplace-s3-data-dev:/data:rw
+    networks:
+    - marketplace-net-dev
+    ports:
+    - ${MARKETPLACE_S3_PORT}:9000
+    - ${MARKETPLACE_S3_TOOL_PORT}:9001
+    restart: unless-stopped
