@@ -1,61 +1,20 @@
-# Test Stage
-FROM python:3.10-slim-bullseye AS test
+# Utilisez l'image Python de base
+FROM python:3.9
+
+# Définit le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# LDAP installation
-RUN apt update && apt install -y python-dev libldap2-dev libsasl2-dev libssl-dev gcc build-essential
+# Copie le fichier requirements.txt dans le conteneur
+COPY requirements.txt .
 
-# PDM installation
-RUN pip install --no-cache-dir pip setuptools wheel
-RUN pip install --no-cache-dir pdm==2.1.0
+# Installe les dépendances du projet
+RUN pip install -r requirements.txt
 
-# Copy Project files
-COPY ./src/pyproject.toml ./
-COPY ./src/pdm.lock ./
+# Copie le contenu du répertoire actuel dans le conteneur
+COPY . .
 
-# Dependencies installation
-RUN pdm install
+# Expose le port 8000 pour FastAPI
+EXPOSE 8000
 
-# Copy all sources files
-COPY ./src ./
-
-# Check Syntax
-RUN pdm run lint
-
-
-# Production Build Stage
-FROM python:3.10-slim-bullseye AS build
-WORKDIR /app
-
-
-# PDM installation
-RUN pip install --no-cache-dir pip setuptools wheel
-RUN pip install --no-cache-dir pdm==2.1.0
-
-# Copy Project files
-COPY ./src/pyproject.toml ./
-COPY ./src/pdm.lock ./
-
-# Dependencies installation for production
-RUN pdm install --prod --no-lock --no-editable
-
-
-# Final Stage
-FROM python:3.10-slim-bullseye
-WORKDIR /app
-
-# CURL installation for healthcheck
-RUN apt update && apt install curl -y && rm -rf /var/lib/apt/lists/*
-
-# Setup dependencies folder and copy these from Build Stage
-ENV PYTHONPATH=/app/pkgs
-COPY --from=build /app/.venv/lib/python3.10/site-packages /app/pkgs
-
-# Copy all sources files
-COPY ./src ./
-
-# Expose Server Port
-EXPOSE 80
-
-# Production launch command
-CMD [ "python", "-m", "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "80" ]
+# Commande par défaut pour exécuter l'application FastAPI
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

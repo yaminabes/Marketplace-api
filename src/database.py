@@ -2,12 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-#import settings
-from app.config import Settings, get_settings
-settings: Settings = get_settings()
 
-
-SQLALCHEMY_DATABASE_URL = settings.database_url
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:qwertyuiop123456@marketplace_db:5432/marketplace"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
