@@ -1,7 +1,7 @@
 from typing import Union
+from .items_schemas import Item
 
 from pydantic import BaseModel
-
 
 class UserBase(BaseModel):
     email: str
