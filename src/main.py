@@ -51,3 +51,21 @@ def create_item_for_user(
 def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     items = crud.get_items(db, skip=skip, limit=limit)
     return items
+
+# Ajout de routes pour gérer les statuts
+
+@app.post("/statuts/", response_model=schemas.Statut)
+def create_statut(statut: schemas.StatutCreate, db: Session = Depends(get_db)):
+    return crud.create_statut(db=db, statut=statut)
+
+@app.get("/statuts/", response_model=list[schemas.Statut])
+def read_statuts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    statuts = crud.get_statuts(db, skip=skip, limit=limit)
+    return statuts
+
+@app.get("/statuts/{statut_id}", response_model=schemas.Statut)
+def read_statut(statut_id: int, db: Session = Depends(get_db)):
+    db_statut = crud.get_statut(db, statut_id=statut_id)
+    if db_statut is None:
+        raise HTTPException(status_code=404, detail="Statut not found")
+    return db_statut
