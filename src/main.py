@@ -1,16 +1,16 @@
 from fastapi import FastAPI
 
-from . import models
+from src import models
 
 
 
-from .database import SessionLocal, engine
+from .database import SessionLocal, engine, Base
 
 # Import Routers
 from src.routes import items_routes, users_routes
 
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
