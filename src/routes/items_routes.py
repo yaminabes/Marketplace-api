@@ -1,7 +1,6 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 
-# from . import models
 from src.schemas.items_schemas import ItemCreate, Item
 
 from src.crud.items_crud import create_user_item, get_items
