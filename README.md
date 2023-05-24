@@ -6,6 +6,7 @@ API of marketplace in the neighbook project
 ## Prerequisites
 - Docker
 - Docker Compose
+- Motivation
 
 ## Getting Started
 
