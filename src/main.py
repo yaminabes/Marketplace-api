@@ -26,8 +26,10 @@ def get_db():
 
 # include routers
 app.include_router(
-    items_routes.router
+    items_routes.router,
+    tags=['Items']
 )
 app.include_router(
-    users_routes.router
+    users_routes.router,
+    tags=['Users']
 )
