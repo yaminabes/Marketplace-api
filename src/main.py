@@ -1,13 +1,9 @@
 from fastapi import FastAPI
 
-from src import models
-
-
-
 from .database import SessionLocal, engine, Base
 
 # Import Routers
-from src.routes import items_routes, users_routes
+from src.routes import items_routes, users_routes, typeOffre_routes, tag_routes
 
 
 Base.metadata.create_all(bind=engine)
@@ -32,4 +28,12 @@ app.include_router(
 app.include_router(
     users_routes.router,
     tags=['Users']
+)
+app.include_router(
+    typeOffre_routes.router,
+    tags=['TypeOffre']
+)
+app.include_router(
+    tag_routes.router,
+    tags=['Tag']
 )
