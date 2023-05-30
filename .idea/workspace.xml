@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3da5f657-5686-491d-b16e-fbeada63bc86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/crud/status_crud.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/status_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/status.routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/schemas/status_schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/crud/status_crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/crud/status_crud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/status_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/status_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/status_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/status_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/status_schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/status_schemas.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

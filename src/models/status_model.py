@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from src.database import Base
 
+
 # Define Statut class from Base
 class Statut(Base):
     __tablename__ = 'statuts'
@@ -11,4 +12,4 @@ class Statut(Base):
     libelleStatut = Column(String(256), unique=True, index=True)
 
     # Define relationship with Offre
-    offres = relationship("Offre", back_populates="statut")
+    #offres = relationship("Offre", back_populates="statut")
