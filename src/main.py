@@ -3,13 +3,11 @@ from fastapi import FastAPI
 from .database import SessionLocal, engine, Base
 
 # Import Routers
-from src.routes import items_routes, users_routes, typeOffre_routes, tag_routes
-
+from src.routes import items_routes, users_routes, typeOffre_routes, tag_routes, status_routes
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
 
 # Dependency
 def get_db():
@@ -18,7 +16,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
 
 # include routers
 app.include_router(
@@ -36,4 +33,8 @@ app.include_router(
 app.include_router(
     tag_routes.router,
     tags=['Tag']
+)
+app.include_router(
+    status_routes.router,
+    tags=['Statuts']
 )
