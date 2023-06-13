@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from .database import SessionLocal, engine, Base
 
@@ -9,6 +10,13 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Dependency
 def get_db():
@@ -17,7 +25,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
 
 # include routers
 app.include_router(
