@@ -24,4 +24,4 @@ __pypackages__/
 
 # S3 Data
 /s3_dev
-/s3
+/s3!/.vscode/
