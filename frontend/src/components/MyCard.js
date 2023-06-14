@@ -27,7 +27,11 @@ export default function MediaCard(props) {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" onClick={() => {props.action(props.id)}}>{props.buttonName}</Button>
+                {props.renderCardActions ? (
+                    props.renderCardActions
+                ) : (
+                    <Button size="small" onClick={() => {props.action(props.id)}}>{props.buttonName}</Button>
+                )}
             </CardActions>
         </Card>
     );

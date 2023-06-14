@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
 import MyCard from '../../components/MyCard';
-import * as React from 'react';
 import Box from '@mui/material/Box';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from '@mui/material/Grid';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
@@ -9,37 +10,37 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-
 import ListItemText from '@mui/material/ListItemText';
-class Marketplace extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    state = {
-        data: [],
-        filters: [],
-        filtersOpened: false,
-    }
-
-    componentDidMount() {
-        this.doDatabind();
-    }
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import {AdInterface} from './AdCard';
+import {Modal} from "@mui/material";
+// @ts-ignore
+import AdCard from './AdCard.tsx';
 
 
-    doDatabind = () => {
-        console.log("test");
-        const { filters } = this.state;
+const Marketplace: React.FC = () => {
+    const [data, setData] = useState<AdInterface[]>([]);
+    const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
+    const [adModalOpened, setAdModalOpened] = useState<boolean>(false);
+    const [adData, setAdData] = useState<AdInterface>();
+
+    useEffect(() => {
+        doDatabind();
+    }, []);
+
+    const doDatabind = (): void => {
+        //const filters: any[] = [];
         // fetch('https://localhost:8000/marketplace/ads', {
         //         method: 'POST',
         //         mode: 'cors',
         //         body: JSON.stringify(jsondata)
         //      }
         // ).then((res) => {
-        //     this.setState({data: res.data})
+        //     setData(res.data)
         // });
 
-        let placeholderData = [
+        const placeholderData = [
             {
                 id: 1,
                 title: "Title 1",
@@ -105,81 +106,108 @@ class Marketplace extends React.Component {
             }
         ]
 
-        this.setState({data: placeholderData});
+        setData(placeholderData);
+        setAdData(placeholderData[1])
+    };
+
+    const cardActionRender = (ad: AdInterface): JSX.Element => {
+        return (<ButtonGroup>
+            <Button
+                startIcon={<LibraryAddIcon />}
+                onClick={() => add(ad.id)}
+            >
+                "Suivre"
+            </Button>
+            <Button
+                endIcon={<VisibilityIcon/>}
+                onClick={() => show(ad)}
+            >
+                "Voir"
+            </Button>
+        </ButtonGroup>);
     }
 
-    buttonAction = (id) => {
-        console.log("click");
+    const add = (id: number): void => {
+        console.log("Suivre ", id);
     }
 
-    toggleDrawer = (state) => {
-        console.log('toggle');
-        this.setState({filtersOpened: state});
-    }
+    const show = (ad: AdInterface): void => {
+        console.log("show", ad.id);
+        setAdData(ad);
+        setAdModalOpened(true);
+    };
 
-    render() {
-        const { data } = this.state;
-        const cols = 3;
+    const toggleDrawer = (state: boolean): void => {
+        setFiltersOpened(state);
+    };
 
-        return (
-            <>
-                <Button
-                    onClick={() => { this.toggleDrawer(true) }}
-                >
-                    Filtres
-                </Button>
-                <Drawer
-                    anchor={'right'}
-                    open={this.state.filtersOpened}
-                    onClose={() => {this.toggleDrawer(false)}}
-                >
-                    <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
-                <Box sx={{flexGrow: 1}}>
-                    <Grid container spacing={3} colums={3}>
-                        {
-                            data.map((ad) => {
-                                return (
-                                    <Grid key={ad.id} item xs={12} md={6} lg={3}>
-                                        <MyCard
-                                            sx={{maxHeight:500}}
-                                            id={ad.id}
-                                            title={ad.title}
-                                            text={ad.text}
-                                            image={ad.image}
-                                            buttonName={ad.buttonName}
-                                            action={this.buttonAction}
-                                        />
-                                    </Grid>);
-                            })
-                        }
-                    </Grid>
-                </Box>
-            </>
-        );
-    }
-}
+    return (
+        <>
+            <Button
+                onClick={() => toggleDrawer(true)}
+            >
+                Filtres
+            </Button>
+            <Drawer
+                anchor={'right'}
+                open={filtersOpened}
+                onClose={() => toggleDrawer(false)}
+            >
+                <List>
+                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                        <ListItem key={text} disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+                <Divider />
+                <List>
+                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                        <ListItem key={text} disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
+            <Modal
+                open={adModalOpened}
+                onClose={() => setAdModalOpened(false)}
+                sx={{
+                    top: '15%',
+                    left: 'auto',
+                    maxWidth: 1000,
+                    p: 4,
+                }}
+            >
+                <AdCard ad={adData} />
+            </Modal>
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container rowSpacing={3} columnSpacing={3}>
+                    {data.map((ad: AdInterface) => (
+                        <Grid item xs={3} key={ad.id}>
+                            <MyCard
+                                sx={{ maxHeight: 500 }}
+                                id={ad.id}
+                                title={ad.title}
+                                text={ad.text}
+                                image={ad.image}
+                                buttonName={ad.buttonName}
+                                renderCardActions={cardActionRender(ad)}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+        </>
+    );
+};
 
 export default Marketplace;
