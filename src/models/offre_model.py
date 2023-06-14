@@ -10,12 +10,14 @@ class Offre(Base):
     idOffre = Column(Integer, primary_key=True, index=True)
     idUser = Column(Integer, unique=False, index=True)
     libelleOffre = Column(String(256), unique=True, index=True)
+    urlImage= Column(String(256), unique=True, index=True)
     dateOffre = Column(DateTime)
     descriptionOffre = Column(String(256))
     prixOffre = Column(Float)
     is_activeTypeOffre = Column(Boolean, default=True)
-    idTypeOffre = Column(Integer, ForeignKey("type_offres.idTypeOffre"))
     idStatut =  Column(Integer, ForeignKey("statuts.idStatut"))
+    idTypeOffre = Column(Integer, ForeignKey("type_offres.idTypeOffre"))
+    
 
 
 

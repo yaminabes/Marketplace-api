@@ -6,6 +6,7 @@ from datetime import datetime
 class OffreBase(BaseModel):
     idUser: int
     libelleOffre: str
+    urlImage:Optional[str]
     dateOffre: Optional[datetime]
     descriptionOffre: Optional[str]
     prixOffre: Optional[float]
