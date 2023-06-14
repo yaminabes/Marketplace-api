@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .database import SessionLocal, engine, Base
 
 # Import Routers
-from src.routes import items_routes, users_routes, typeOffre_routes, tag_routes, status_routes, offre_routes
+from src.routes import items_routes, users_routes, typeOffre_routes, tag_routes, status_routes, offre_routes, health_routes
 
 Base.metadata.create_all(bind=engine)
 
@@ -27,6 +27,12 @@ def get_db():
         db.close()
 
 # include routers
+app.include_router(
+    health_routes.router,
+    tags=['Health']
+)
+
+
 app.include_router(
     items_routes.router,
     tags=['Items']
