@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
-import {Link, useNavigate, useOutletContext} from 'react-router-dom';
+import { useNavigate, useOutletContext} from 'react-router-dom';
 import MyCard from '../../components/MyCard';
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Grid from '@mui/material/Grid';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {AdInterface} from './AdCard';
-import {Modal, TextField} from "@mui/material";
+import {Modal} from "@mui/material";
 import routes from '../../services/services'
 import MarketplaceFilter from './MarketplaceFilter.tsx';
 // @ts-ignore
@@ -29,11 +23,10 @@ const Marketplace: React.FC = () => {
     const [adModalOpened, setAdModalOpened] = useState<boolean>(false);
     const [adData, setAdData] = useState<AdInterface>();
     const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
+    // @ts-ignore
     const [toolbarRender, setToolbarRender] = useOutletContext();
     const [filters, setFilters] = useState<object>({});
     const navigate = useNavigate();
-
-    var offres = []
 
     useEffect(() => {
         setToolbarRender(() => toolbarRenderMarketplace());
