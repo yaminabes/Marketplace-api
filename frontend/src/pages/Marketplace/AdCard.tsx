@@ -25,4 +25,4 @@ const AdCard: FunctionComponent<AdProps> = ({ad = {}}) => {
         />
     );
 };
-export default AdCard
+export default AdCard;
