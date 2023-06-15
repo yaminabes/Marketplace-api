@@ -8,7 +8,11 @@ from src.routes import items_routes, users_routes, typeOffre_routes, tag_routes,
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(root_path="/marketplace/api/v1"
+    ,title="Marketplace API"
+    ,description="API pour le marketplace"
+    ,version="1.0.0"
+)
 
 app.add_middleware(
     CORSMiddleware,

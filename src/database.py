@@ -11,6 +11,7 @@ SQLALCHEMY_DATABASE_URL = (
     f"{config['DATABASE']['HOST']}:"
     f"{config['DATABASE']['PORT']}/"
     f"{config['DATABASE']['DATABASE_NAME']}"
+    f"?sslmode={'require' if config['DATABASE']['USE_SSL'] else 'disable'}"
 )
 
 

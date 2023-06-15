@@ -12,6 +12,7 @@ config = {
         "DATABASE_NAME": os.getenv("DB_NAME", "my_database"),
         "USERNAME": os.getenv("DB_USERNAME", "my_username"),
         "PASSWORD": os.getenv("DB_PASSWORD", "my_password"),
+        "USE_SSL": True if os.getenv("DB_USE_SSL", "").lower() == "true" else False,
     },
     "LOG_LEVEL": os.getenv("LOG_LEVEL", "info"),
     "LOG_FILE": os.getenv("LOG_FILE", "app.log"),
