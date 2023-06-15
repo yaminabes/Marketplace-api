@@ -24,5 +24,5 @@ const AdCard: FunctionComponent<AdProps> = ({ad = {}}) => {
             action={() => console.log("click")}
         />
     );
-}
-export default AdCard;
+};
+export default AdCard

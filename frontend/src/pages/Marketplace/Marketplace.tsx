@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom';
 import MyCard from '../../components/MyCard';
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -14,10 +15,12 @@ import ListItemText from '@mui/material/ListItemText';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {AdInterface} from './AdCard';
-import {Modal} from "@mui/material";
+import {Modal, TextField} from "@mui/material";
 // @ts-ignore
 import AdCard from './AdCard.tsx';
-
+import Stack from "@mui/material/Stack";
+// @ts-ignore
+import MySelect from '../../components/MySelect.tsx';
 
 const Marketplace: React.FC = () => {
     const [data, setData] = useState<AdInterface[]>([]);
@@ -143,6 +146,7 @@ const Marketplace: React.FC = () => {
 
     return (
         <>
+            <Link to={"/offres/new"}>Créer une nouvelle offre</Link>
             <Button
                 onClick={() => toggleDrawer(true)}
             >
@@ -153,29 +157,20 @@ const Marketplace: React.FC = () => {
                 open={filtersOpened}
                 onClose={() => toggleDrawer(false)}
             >
-                <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+                <Stack>
+                    <TextField label={"Titre"}/>
+                    <TextField label={"Nom d'utilisateur"}/>
+                    <MySelect
+                        label={"Tags"}
+                        className={"TagFilter"}
+                        dataSourceUrl={"lll"}
+                        bindingScheme={{
+                            Key: "id",
+                            Label: "label"
+                        }}
+                        callback={(val) => console.log("test", val)}
+                    />
+                </Stack>
             </Drawer>
             <Modal
                 open={adModalOpened}
