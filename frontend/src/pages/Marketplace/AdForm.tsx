@@ -2,35 +2,21 @@ import {useEffect, useState} from 'react';
 import Stack from "@mui/material/Stack";
 import {TextField, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
-<<<<<<< HEAD
-import {Link} from 'react-router-dom';
-import routes from '../../services/services'
-=======
 import {Link, useNavigate, useOutletContext} from 'react-router-dom';
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import ClearIcon from '@mui/icons-material/Clear';
->>>>>>> 8470e6640d546233aa55f6791eacdf89d548a879
+import routes from '../../services/services'
 
 type Form = {
     idUser: number;
     libelleOffre: string;
-<<<<<<< HEAD
     dateOffre:string;
     descriptionOffre: string;
     prixOffre: number;
     is_activeTypeOffre: boolean;
     idTypeOffre : number;
     idStatus: number
-=======
-    dateOffre: string;
-    descriptionOffre: string;
-    prixOffre: number;
-    is_activeTypeOffre: boolean;
-    idTypeOffre: number;
-    idStatut: number;
-    image: string;
->>>>>>> 8470e6640d546233aa55f6791eacdf89d548a879
 }
 
 const AdForm: React.FC = () => {
@@ -57,19 +43,6 @@ const AdForm: React.FC = () => {
                 </Button>
             </>
         );
-    }
-
-    const handleChange = (from: string, value: any) => {
-        let copy : Form = {...formData};
-        copy[from] = value;
-        copy.idUser = 0;
-        copy.dateOffre = Date.now().toString();
-        copy.prixOffre = 0;
-        copy.is_activeTypeOffre = true;
-        copy.idTypeOffre = 0;
-        copy.idStatut = 0;
-        copy.image = "#";
-        setFormData(copy);
     }
 
     const handleChange = (from: string, value: any) => {
@@ -111,16 +84,8 @@ const AdForm: React.FC = () => {
                 <TextField
                     required={true}
                     label={""}
-<<<<<<< HEAD
-                    />
-                <ButtonGroup>
-                    <Button onClick={sendOffre}>Valider</Button>
-                    <Button><Link to={'/offres'}>Annuler</Link></Button>
-                </ButtonGroup>
-=======
                 />
                 <Button>Valider</Button>
->>>>>>> 8470e6640d546233aa55f6791eacdf89d548a879
             </Stack>
         </>
     );
