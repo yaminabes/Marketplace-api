@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {Link, useOutletContext} from 'react-router-dom';
+import {Link, useNavigate, useOutletContext} from 'react-router-dom';
 import MyCard from '../../components/MyCard';
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -23,6 +23,7 @@ import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import MySelect from "../../components/MySelect.tsx";
+import ClearIcon from "@mui/icons-material/Clear";
 // @ts-ignore
 
 const Marketplace: React.FC = () => {
@@ -31,6 +32,7 @@ const Marketplace: React.FC = () => {
     const [adData, setAdData] = useState<AdInterface>();
     const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
     const [toolbarRender, setToolbarRender] = useOutletContext();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setToolbarRender(() => toolbarRenderMarketplace());
@@ -148,20 +150,17 @@ const Marketplace: React.FC = () => {
     function toolbarRenderMarketplace(): JSX.Element {
         return (
             <>
-                <IconButton
+                <Button
+                    fullWidth={true}
                     size="large"
-                    edge="start"
                     color="inherit"
-                    aria-label="ajouter"
+                    startIcon={<AddCircleIcon />}
                     sx={{ mr: 2 }}
+                    onClick={() => navigate("/offres/new")}
                 >
-                    <Link to={"/offres/new"}>
-                        <AddCircleIcon />
-                    </Link>
-                </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Ajouter une annonce
-                </Typography>
+                        Ajouter une annonce
+                </Button>
+
                 <IconButton
                     onClick={() => setFiltersOpened(true)}
                 >

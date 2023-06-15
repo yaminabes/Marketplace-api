@@ -1,10 +1,8 @@
 import {useEffect, useState} from 'react';
 import Stack from "@mui/material/Stack";
 import {TextField, Typography} from "@mui/material";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
-import {Link, useOutletContext} from 'react-router-dom';
-import IconButton from "@mui/material/IconButton";
+import {Link, useNavigate, useOutletContext} from 'react-router-dom';
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import ClearIcon from '@mui/icons-material/Clear';
@@ -24,6 +22,7 @@ type Form = {
 const AdForm: React.FC = () => {
     const [formData, setFormData] = useState<Form>();
     const [toolbarRender, setToolbarRender] = useOutletContext();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setToolbarRender(() => toolbarRenderMarketplace());
@@ -32,20 +31,16 @@ const AdForm: React.FC = () => {
     function toolbarRenderMarketplace(): JSX.Element {
         return (
             <>
-                <Link to={"/offres"}>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="ajouter"
-                        sx={{ mr: 2 }}
-                    >
-                        <ClearIcon />
-                    </IconButton>
-                </Link>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Retourner à la page des annonces
-                </Typography>
+                <Button
+                    fullWidth={true}
+                    size="large"
+                    color="inherit"
+                    startIcon={<ClearIcon />}
+                    sx={{ mr: 2 }}
+                    onClick={() => navigate("/offres")}
+                >
+                        Retourner à la page des annonces
+                </Button>
             </>
         );
     }
@@ -81,10 +76,7 @@ const AdForm: React.FC = () => {
                     required={true}
                     label={""}
                 />
-                <ButtonGroup>
-                    <Button>Valider</Button>
-                    <Button><Link to={'/offres'}>Annuler</Link></Button>
-                </ButtonGroup>
+                <Button>Valider</Button>
             </Stack>
         </>
     );

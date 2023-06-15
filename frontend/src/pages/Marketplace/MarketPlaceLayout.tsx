@@ -13,7 +13,7 @@ const MarketPlaceLayout: React.FC = () => {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position={"fixed"}>
+            <AppBar position={"absolute"}>
                 { toolbarRender ? (
                     <Toolbar
                         sx={{height: 40}}
