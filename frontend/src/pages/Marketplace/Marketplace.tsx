@@ -17,16 +17,12 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {AdInterface} from './AdCard';
 import {Modal, TextField} from "@mui/material";
 import routes from '../../services/services'
-
+import MarketplaceFilter from './MarketplaceFilter.tsx';
 // @ts-ignore
 import AdCard from './AdCard.tsx';
-import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import MySelect from "../../components/MySelect.tsx";
-import ClearIcon from "@mui/icons-material/Clear";
-// @ts-ignore
 
 const Marketplace: React.FC = () => {
     const [data, setData] = useState<AdInterface[]>([]);
@@ -34,6 +30,7 @@ const Marketplace: React.FC = () => {
     const [adData, setAdData] = useState<AdInterface>();
     const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
     const [toolbarRender, setToolbarRender] = useOutletContext();
+    const [filters, setFilters] = useState<object>({});
     const navigate = useNavigate();
 
     var offres = []
@@ -44,91 +41,22 @@ const Marketplace: React.FC = () => {
     }, []);
 
     const doDatabind = (): void => {
-
         routes.getOffres().then((data)=>setData(data))
-        
-        //     {
-        //         id: 1,
-        //         title: "Title 1",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 2,
-        //         title: "Title 2",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 3,
-        //         title: "Title 3",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 4,
-        //         title: "Title 4",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 5,
-        //         title: "Title 5",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 6,
-        //         title: "Title 6",
-        //         text:"    Lore ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 7,
-        //         title: "Title 7",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 8,
-        //         title: "Title 8",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     },
-        //     {
-        //         id: 9,
-        //         title: "Title 9",
-        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        //         image: "frontend/src/pages/media/babysitter.jpg",
-        //         buttonName: "Suivre l'annonce"
-        //     }
-        // ]
-
-        // setData(placeholderData);
-        // setAdData(placeholderData[1])
     };
 
     const cardActionRender = (ad: AdInterface): JSX.Element => {
         return (<ButtonGroup>
             <Button
                 startIcon={<LibraryAddIcon />}
-                onClick={() => add(ad.id)}
+                onClick={() => add(ad.idOffre)}
             >
-                "Suivre"
+                Suivre
             </Button>
             <Button
                 endIcon={<VisibilityIcon/>}
                 onClick={() => show(ad)}
             >
-                "Voir"
+                Consulter
             </Button>
         </ButtonGroup>);
     }
@@ -138,9 +66,9 @@ const Marketplace: React.FC = () => {
     }
 
     const show = (ad: AdInterface): void => {
-        console.log("show", ad.id);
+        console.log("show", ad.idOffre);
         setAdData(ad);
-        setAdModalOpened(true);
+        toggleAdModal(true);
     };
 
     function toolbarRenderMarketplace(): JSX.Element {
@@ -166,18 +94,26 @@ const Marketplace: React.FC = () => {
         );
     }
 
+    const toggleAdModal = (state) => {
+        setAdModalOpened(state);
+    }
+
     return (
         <>
             <Modal
                 open={adModalOpened}
-                onClose={() => setAdModalOpened(false)}
+                onClose={() => toggleAdModal(false)}
                 sx={{
                     maxWidth: 1000,
                     p: 30,
                 }}
             >
                 <Box>
-                    <AdCard ad={adData} />
+                    <AdCard
+                        ad={adData}
+                        buttonName={"Ajouter aux annonces suivies"}
+                        callback={() => toggleAdModal(false)}
+                    />
                 </Box>
             </Modal>
             <Drawer
@@ -185,20 +121,13 @@ const Marketplace: React.FC = () => {
                 open={filtersOpened}
                 onClose={() => setFiltersOpened(false)}
             >
-                <Stack>
-                    <TextField label={"Titre"}/>
-                    <TextField label={"Nom d'utilisateur"}/>
-                    <MySelect
-                        label={"Tags"}
-                        className={"TagFilter"}
-                        dataSourceUrl={"lll"}
-                        bindingScheme={{
-                            Key: "id",
-                            Label: "label"
-                        }}
-                        callback={(val) => console.log("test", val)}
-                    />
-                </Stack>
+                <MarketplaceFilter
+                    values={filters}
+                    callback={(f) => {
+                        setFilters(f);
+                        console.log(f)
+                    }}
+                />
             </Drawer>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container rowSpacing={3} columnSpacing={3}>
@@ -210,7 +139,6 @@ const Marketplace: React.FC = () => {
                                 title={ad.libelleOffre}
                                 text={ad.descriptionOffre }
                                 image={ad.image}
-                                buttonName={ad.buttonName}
                                 renderCardActions={cardActionRender(ad)}
                             />
                         </Grid>
