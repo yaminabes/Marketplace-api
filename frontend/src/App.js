@@ -1,11 +1,20 @@
 import './App.css';
-import Marketplace from './pages/Marketplace/Marketplace';
+import MarketplaceFunctional from './pages/Marketplace/Marketplace.tsx';
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import AdForm from "./pages/Marketplace/AdForm.tsx";
+import {ScopedCssBaseline} from "@mui/material";
+import MarketplaceLayout from './pages/Marketplace/MarketPlaceLayout.tsx';
 
 function App() {
   return (
-    <div className="App">
-      <Marketplace />
-    </div>
+    <BrowserRouter>
+        <Routes>
+            <Route path={"/offres"} element={<MarketplaceLayout/>}>
+                <Route index element={<MarketplaceFunctional />} />
+                <Route path={"new"} element={<AdForm />} />
+            </Route>
+        </Routes>
+    </BrowserRouter>
   );
 }
 
