@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useOutletContext} from 'react-router-dom';
 import MyCard from '../../components/MyCard';
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -15,29 +15,34 @@ import ListItemText from '@mui/material/ListItemText';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {AdInterface} from './AdCard';
-import {Modal, TextField} from "@mui/material";
+import {Modal, TextField, Typography} from "@mui/material";
 // @ts-ignore
 import AdCard from './AdCard.tsx';
 import Stack from "@mui/material/Stack";
+import IconButton from "@mui/material/IconButton";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import MenuIcon from "@mui/icons-material/Menu";
+import MySelect from "../../components/MySelect.tsx";
 // @ts-ignore
-import MySelect from '../../components/MySelect.tsx';
 
 const Marketplace: React.FC = () => {
     const [data, setData] = useState<AdInterface[]>([]);
-    const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
     const [adModalOpened, setAdModalOpened] = useState<boolean>(false);
     const [adData, setAdData] = useState<AdInterface>();
+    const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
+    const [toolbarRender, setToolbarRender] = useOutletContext();
 
     useEffect(() => {
+        setToolbarRender(() => toolbarRenderMarketplace());
         doDatabind();
     }, []);
 
     const doDatabind = (): void => {
-        //const filters: any[] = [];
+        // const filters: any[] = [];
         // fetch('https://localhost:8000/marketplace/ads', {
         //         method: 'POST',
         //         mode: 'cors',
-        //         body: JSON.stringify(jsondata)
+        //         body: JSON.stringify(filters)
         //      }
         // ).then((res) => {
         //     setData(res.data)
@@ -140,22 +145,50 @@ const Marketplace: React.FC = () => {
         setAdModalOpened(true);
     };
 
-    const toggleDrawer = (state: boolean): void => {
-        setFiltersOpened(state);
-    };
+    function toolbarRenderMarketplace(): JSX.Element {
+        return (
+            <>
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="ajouter"
+                    sx={{ mr: 2 }}
+                >
+                    <Link to={"/offres/new"}>
+                        <AddCircleIcon />
+                    </Link>
+                </IconButton>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Ajouter une annonce
+                </Typography>
+                <IconButton
+                    onClick={() => setFiltersOpened(true)}
+                >
+                    <MenuIcon />
+                </IconButton>
+            </>
+        );
+    }
 
     return (
         <>
-            <Link to={"/offres/new"}>Créer une nouvelle offre</Link>
-            <Button
-                onClick={() => toggleDrawer(true)}
+            <Modal
+                open={adModalOpened}
+                onClose={() => setAdModalOpened(false)}
+                sx={{
+                    maxWidth: 1000,
+                    p: 30,
+                }}
             >
-                Filtres
-            </Button>
+                <Box>
+                    <AdCard ad={adData} />
+                </Box>
+            </Modal>
             <Drawer
                 anchor={'right'}
                 open={filtersOpened}
-                onClose={() => toggleDrawer(false)}
+                onClose={() => setFiltersOpened(false)}
             >
                 <Stack>
                     <TextField label={"Titre"}/>
@@ -172,18 +205,6 @@ const Marketplace: React.FC = () => {
                     />
                 </Stack>
             </Drawer>
-            <Modal
-                open={adModalOpened}
-                onClose={() => setAdModalOpened(false)}
-                sx={{
-                    maxWidth: 1000,
-                    p: 30,
-                }}
-            >
-                <Box>
-                    <AdCard ad={adData} />
-                </Box>
-            </Modal>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container rowSpacing={3} columnSpacing={3}>
                     {data.map((ad: AdInterface) => (
