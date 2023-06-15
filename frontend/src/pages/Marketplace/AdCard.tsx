@@ -6,22 +6,23 @@ export interface AdInterface {
     libelleOffre: string,
     descriptionOffre: string,
     image: string,
-    buttonName: string,
 }
 
 interface AdProps {
     ad?: AdInterface,
+    buttonName?: string,
+    callback: Function,
 }
 
-const AdCard: FunctionComponent<AdProps> = ({ad = {}}) => {
+const AdCard: FunctionComponent<AdProps> = ({ad, buttonName, callback = {}}) => {
     return (
         <MyCard
-            id={ad.id ?? 0}
-            title={ad.title ?? "title"}
-            text={ad.text ?? "text"}
+            id={ad.idOffre ?? 0}
+            title={ad.libelleOffre ?? "title"}
+            text={ad.descriptionOffre ?? "text"}
             image={ad.image ?? "#"}
-            buttonName={ad.buttonName ?? "button"}
-            action={() => console.log("click")}
+            buttonName={buttonName ?? "button"}
+            action={callback}
         />
     );
 };

@@ -85,7 +85,7 @@ const AdForm: React.FC = () => {
                     required={true}
                     label={""}
                 />
-                <Button>Valider</Button>
+                <Button onClick={sendOffre}>Valider</Button>
             </Stack>
         </>
     );

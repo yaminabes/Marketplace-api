@@ -3,7 +3,7 @@ const routes = {
 
 /* Récupérer les offres  */
 async getOffres(){
-    var res = await fetch('http://localhost:8000/offres', {
+    var res = await fetch('http://localhost:8000/offres/', {
         method: 'GET',
         mode: 'cors'
     })
