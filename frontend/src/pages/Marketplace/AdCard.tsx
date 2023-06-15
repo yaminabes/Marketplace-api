@@ -2,9 +2,9 @@ import {FunctionComponent} from "react";
 import MyCard from '../../components/MyCard';
 
 export interface AdInterface {
-    id: number,
-    title: string,
-    text: string,
+    idOffre: number,
+    libelleOffre: string,
+    descriptionOffre: string,
     image: string,
     buttonName: string,
 }

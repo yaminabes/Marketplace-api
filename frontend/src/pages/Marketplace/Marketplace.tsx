@@ -16,6 +16,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import {AdInterface} from './AdCard';
 import {Modal, TextField} from "@mui/material";
+import routes from '../../services/services'
+
 // @ts-ignore
 import AdCard from './AdCard.tsx';
 import Stack from "@mui/material/Stack";
@@ -28,89 +30,83 @@ const Marketplace: React.FC = () => {
     const [adModalOpened, setAdModalOpened] = useState<boolean>(false);
     const [adData, setAdData] = useState<AdInterface>();
 
+    var offres = []
+
     useEffect(() => {
         doDatabind();
     }, []);
 
     const doDatabind = (): void => {
-        //const filters: any[] = [];
-        // fetch('https://localhost:8000/marketplace/ads', {
-        //         method: 'POST',
-        //         mode: 'cors',
-        //         body: JSON.stringify(jsondata)
-        //      }
-        // ).then((res) => {
-        //     setData(res.data)
-        // });
 
-        const placeholderData = [
-            {
-                id: 1,
-                title: "Title 1",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 2,
-                title: "Title 2",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 3,
-                title: "Title 3",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 4,
-                title: "Title 4",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 5,
-                title: "Title 5",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 6,
-                title: "Title 6",
-                text:"    Lore ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 7,
-                title: "Title 7",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 8,
-                title: "Title 8",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            },
-            {
-                id: 9,
-                title: "Title 9",
-                text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                image: "frontend/src/pages/media/babysitter.jpg",
-                buttonName: "Suivre l'annonce"
-            }
-        ]
+        routes.getOffres().then((data)=>setData(data))
+        
+        //     {
+        //         id: 1,
+        //         title: "Title 1",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 2,
+        //         title: "Title 2",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 3,
+        //         title: "Title 3",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 4,
+        //         title: "Title 4",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 5,
+        //         title: "Title 5",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 6,
+        //         title: "Title 6",
+        //         text:"    Lore ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 7,
+        //         title: "Title 7",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 8,
+        //         title: "Title 8",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     },
+        //     {
+        //         id: 9,
+        //         title: "Title 9",
+        //         text:"    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        //         image: "frontend/src/pages/media/babysitter.jpg",
+        //         buttonName: "Suivre l'annonce"
+        //     }
+        // ]
 
-        setData(placeholderData);
-        setAdData(placeholderData[1])
+        // setData(placeholderData);
+        // setAdData(placeholderData[1])
     };
 
     const cardActionRender = (ad: AdInterface): JSX.Element => {
@@ -187,12 +183,12 @@ const Marketplace: React.FC = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container rowSpacing={3} columnSpacing={3}>
                     {data.map((ad: AdInterface) => (
-                        <Grid item xs={3} key={ad.id}>
+                        <Grid item xs={3} key={ad.idOffre}>
                             <MyCard
                                 sx={{ maxHeight: 500 }}
-                                id={ad.id}
-                                title={ad.title}
-                                text={ad.text}
+                                id={ad.idOffre}
+                                title={ad.libelleOffre}
+                                text={ad.descriptionOffre }
                                 image={ad.image}
                                 buttonName={ad.buttonName}
                                 renderCardActions={cardActionRender(ad)}
