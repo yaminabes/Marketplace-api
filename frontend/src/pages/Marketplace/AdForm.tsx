@@ -1,10 +1,8 @@
 import {useEffect, useState} from 'react';
 import Stack from "@mui/material/Stack";
-import {TextField, Typography} from "@mui/material";
+import {TextField } from "@mui/material";
 import Button from "@mui/material/Button";
-import {Link, useNavigate, useOutletContext} from 'react-router-dom';
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import MenuIcon from "@mui/icons-material/Menu";
+import {useNavigate, useOutletContext} from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
 import routes from '../../services/services'
 
@@ -21,6 +19,7 @@ type Form = {
 
 const AdForm: React.FC = () => {
     const [formData, setFormData] = useState<Form>();
+    // @ts-ignore
     const [toolbarRender, setToolbarRender] = useOutletContext();
     const navigate = useNavigate();
 
@@ -78,7 +77,6 @@ const AdForm: React.FC = () => {
                     label={"Description de l'annonce"}
                     multiline
                     rows={10}
-                    onChange={(event) => {handleChange('descriptionOffre', event.target.value)}}
 
                 />
                 <TextField
