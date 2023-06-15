@@ -1,33 +1,38 @@
 import {MenuItem, Select} from "@mui/material";
-import {useEffect, useState} from "react";
+import {FunctionComponent, useEffect, useState} from "react";
 
 type MySelectProps = {
-    dataSourceUrl: string,
-    dataSource: [],
+    dataSourceUrl?: string,
+    dataSource?: [],
     bindingScheme: {Key: string, Label: string}
     label: string,
-    className: string,
+    className?: string,
     callback: Function,
+    value: number,
 }
 
-const MySelect: React.FC = ({
+const MySelect: FunctionComponent<MySelectProps> = ({
     className,
     dataSourceUrl,
     dataSource,
     bindingScheme,
     label,
-    callback
-}: MySelectProps) => {
-    const [data, setData] = useState<object[]>([]);
-    const [selected, setSelected] = useState<any>(null);
+    callback,
+    value= 0,
+}) => {
+    const [data, setData] = useState<object[]>([{id:0, label: ""}]);
+    const [selected, setSelected] = useState<any>(0);
 
     useEffect(() => {
         if(dataSource?.length > 0) {
-            return setData(dataSource);
+            setData(dataSource);
+        } else {
+            if(dataSourceUrl) {
+                doDatabind();
+            }
         }
-        if(dataSourceUrl) {
-            return doDatabind();
-        }
+
+
     }, []);
 
     const doDatabind = () => {
@@ -42,36 +47,42 @@ const MySelect: React.FC = ({
         let placeholderData = [
             {
                 id: 0,
-                label: "test 1"
+                label: "-- Catégorie --"
             },
             {
                 id: 1,
-                label: "test 2"
+                label: "test 1"
             },
             {
                 id: 2,
+                label: "test 2"
+            },
+            {
+                id: 3,
                 label: "test 3"
             },
         ];
         setData(placeholderData);
+        if(value && placeholderData.length > value) {
+            setSelected(value);
+        }
+
     }
     const handleChange = (selected) => {
-        let newValue = selected[bindingScheme?.Key]
-        if (newValue) {
-            setSelected(newValue)
-            if (callback) {
-                callback(newValue);
-            }
+        console.log(selected);
+        setSelected(selected)
+        if (callback) {
+            callback(selected);
         }
     }
 
     return (
         <Select
-            defaultValue={selected ?? undefined}
             label={label}
             labelId={"my-select-label" + (className ? ` my-select-label-${className} ${className}` : "")}
             id={"my-select" + (className ? ` my-select-${className} ${className}` : "")}
-            onChange={handleChange}
+            onChange={(event) => handleChange(event.target.value)}
+            value={selected}
         >
             {data.map((item: object) => (
                 <MenuItem
