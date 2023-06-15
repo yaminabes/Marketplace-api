@@ -176,13 +176,13 @@ const Marketplace: React.FC = () => {
                 open={adModalOpened}
                 onClose={() => setAdModalOpened(false)}
                 sx={{
-                    top: '15%',
-                    left: 'auto',
                     maxWidth: 1000,
-                    p: 4,
+                    p: 30,
                 }}
             >
-                <AdCard ad={adData} />
+                <Box>
+                    <AdCard ad={adData} />
+                </Box>
             </Modal>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container rowSpacing={3} columnSpacing={3}>
